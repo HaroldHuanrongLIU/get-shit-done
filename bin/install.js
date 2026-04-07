@@ -5540,19 +5540,19 @@ function install(isGlobal, runtime = 'claude') {
   const settings = validateHookFields(cleanupOrphanedHooks(rawSettings));
   const statuslineCommand = isGlobal
     ? buildHookCommand(targetDir, 'gsd-statusline.js')
-    : 'node ' + dirName + '/hooks/gsd-statusline.js';
+    : 'node "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-statusline.js';
   const updateCheckCommand = isGlobal
     ? buildHookCommand(targetDir, 'gsd-check-update.js')
-    : 'node ' + dirName + '/hooks/gsd-check-update.js';
+    : 'node "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-check-update.js';
   const contextMonitorCommand = isGlobal
     ? buildHookCommand(targetDir, 'gsd-context-monitor.js')
-    : 'node ' + dirName + '/hooks/gsd-context-monitor.js';
+    : 'node "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-context-monitor.js';
   const promptGuardCommand = isGlobal
     ? buildHookCommand(targetDir, 'gsd-prompt-guard.js')
-    : 'node ' + dirName + '/hooks/gsd-prompt-guard.js';
+    : 'node "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-prompt-guard.js';
   const readGuardCommand = isGlobal
     ? buildHookCommand(targetDir, 'gsd-read-guard.js')
-    : 'node ' + dirName + '/hooks/gsd-read-guard.js';
+    : 'node "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-read-guard.js';
 
   // Enable experimental agents for Gemini CLI (required for custom sub-agents)
   if (isGemini) {
@@ -5689,7 +5689,7 @@ function install(isGlobal, runtime = 'claude') {
     // /gsd-quick or /gsd-fast for state-tracked changes. Advisory only.
     const workflowGuardCommand = isGlobal
       ? buildHookCommand(targetDir, 'gsd-workflow-guard.js')
-      : 'node ' + dirName + '/hooks/gsd-workflow-guard.js';
+      : 'node "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-workflow-guard.js';
     const hasWorkflowGuardHook = settings.hooks[preToolEvent].some(entry =>
       entry.hooks && entry.hooks.some(h => h.command && h.command.includes('gsd-workflow-guard'))
     );
@@ -5711,7 +5711,7 @@ function install(isGlobal, runtime = 'claude') {
     // Configure commit validation hook (Conventional Commits enforcement, opt-in)
     const validateCommitCommand = isGlobal
       ? 'bash ' + targetDir.replace(/\\/g, '/') + '/hooks/gsd-validate-commit.sh'
-      : 'bash ' + dirName + '/hooks/gsd-validate-commit.sh';
+      : 'bash "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-validate-commit.sh';
     const hasValidateCommitHook = settings.hooks[preToolEvent].some(entry =>
       entry.hooks && entry.hooks.some(h => h.command && h.command.includes('gsd-validate-commit'))
     );
@@ -5738,7 +5738,7 @@ function install(isGlobal, runtime = 'claude') {
     // Configure session state orientation hook (opt-in)
     const sessionStateCommand = isGlobal
       ? 'bash ' + targetDir.replace(/\\/g, '/') + '/hooks/gsd-session-state.sh'
-      : 'bash ' + dirName + '/hooks/gsd-session-state.sh';
+      : 'bash "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-session-state.sh';
     const hasSessionStateHook = settings.hooks.SessionStart.some(entry =>
       entry.hooks && entry.hooks.some(h => h.command && h.command.includes('gsd-session-state'))
     );
@@ -5760,7 +5760,7 @@ function install(isGlobal, runtime = 'claude') {
     // Configure phase boundary detection hook (opt-in)
     const phaseBoundaryCommand = isGlobal
       ? 'bash ' + targetDir.replace(/\\/g, '/') + '/hooks/gsd-phase-boundary.sh'
-      : 'bash ' + dirName + '/hooks/gsd-phase-boundary.sh';
+      : 'bash "$CLAUDE_PROJECT_DIR"/' + dirName + '/hooks/gsd-phase-boundary.sh';
     const hasPhaseBoundaryHook = settings.hooks[postToolEvent].some(entry =>
       entry.hooks && entry.hooks.some(h => h.command && h.command.includes('gsd-phase-boundary'))
     );
